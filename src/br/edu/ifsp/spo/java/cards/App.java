@@ -6,12 +6,15 @@ public class App {
 
     public static void main(String[] args) {
 
-        Baralho baralho = new Baralho();
+        Jogo vinteUm = new Jogo(2);
+        System.out.println(vinteUm);
 
-        Carta carta = baralho.tirarCarta();
-
-        System.out.println(carta);
-
-        System.out.println(MessageFormat.format("Cartas restantes no baralho: {0}", baralho.cartasRestantes()));
+//        Baralho baralho = new Baralho();
+//
+//        Carta carta = baralho.tirarCarta();
+//
+//        System.out.println(carta);
+//
+//        System.out.println(MessageFormat.format("Cartas restantes no baralho: {0}", baralho.cartasRestantes()));
     }
 }
