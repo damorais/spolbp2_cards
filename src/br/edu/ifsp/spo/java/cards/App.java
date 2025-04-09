@@ -5,9 +5,11 @@ import java.text.MessageFormat;
 public class App {
 
     public static void main(String[] args) {
+//        Carta carta1 = new Carta(Naipe.ESPADAS, Valor.AS);
+//        Carta carta2 = new Carta(Naipe.COPAS, Valor.DEZ);
 
-        Jogo vinteUm = new Jogo(2);
-        System.out.println(vinteUm);
+//        Jogo vinteUm = new Jogo(2);
+//        System.out.println(vinteUm);
 
 //        Baralho baralho = new Baralho();
 //
