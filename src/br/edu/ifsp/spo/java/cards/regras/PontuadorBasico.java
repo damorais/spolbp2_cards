@@ -1,9 +1,10 @@
-package br.edu.ifsp.spo.java.cards;
+package br.edu.ifsp.spo.java.cards.regras;
+
+import br.edu.ifsp.spo.java.cards.itens.Carta;
 
 import java.util.List;
 
-public class Pontuador {
-
+public class PontuadorBasico  implements Pontuador {
     public int verificarPontuacao(List<Carta> cartas){
 
         int pontuacao = 0;

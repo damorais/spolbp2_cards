@@ -1,4 +1,6 @@
-package br.edu.ifsp.spo.java.cards;
+package br.edu.ifsp.spo.java.cards.nucleo;
+
+import br.edu.ifsp.spo.java.cards.itens.Baralho;
 
 public class Jogo {
 

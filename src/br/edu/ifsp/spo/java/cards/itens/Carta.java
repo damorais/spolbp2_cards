@@ -1,4 +1,4 @@
-package br.edu.ifsp.spo.java.cards;
+package br.edu.ifsp.spo.java.cards.itens;
 
 public class Carta {
     private final Naipe naipe;

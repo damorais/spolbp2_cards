@@ -1,4 +1,6 @@
-package br.edu.ifsp.spo.java.cards;
+package br.edu.ifsp.spo.java.cards.nucleo;
+
+import br.edu.ifsp.spo.java.cards.itens.Carta;
 
 import java.util.ArrayList;
 import java.util.List;

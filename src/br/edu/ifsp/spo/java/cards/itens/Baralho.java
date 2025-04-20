@@ -1,4 +1,4 @@
-package br.edu.ifsp.spo.java.cards;
+package br.edu.ifsp.spo.java.cards.itens;
 
 import java.util.ArrayList;
 import java.util.Collections;
