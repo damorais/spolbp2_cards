@@ -2,7 +2,6 @@ package br.edu.ifsp.spo.java.cards.nucleo;
 
 import br.edu.ifsp.spo.java.cards.itens.Baralho;
 import br.edu.ifsp.spo.java.cards.regras.Pontuador;
-import br.edu.ifsp.spo.java.cards.regras.PontuadorBasico;
 import br.edu.ifsp.spo.java.cards.ui.JogoUI;
 
 public class Jogo {
@@ -18,7 +17,7 @@ public class Jogo {
     public Jogo(){
         this.ui = new JogoUI();
 
-        this.pontuador = new PontuadorBasico();
+        this.pontuador = this.ui.escolherPontuador();
 
         this.baralho = new Baralho();
         this.jogador1 = new Jogador(ui.solicitarNomeJogador(1));

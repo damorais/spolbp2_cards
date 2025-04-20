@@ -4,7 +4,7 @@ import br.edu.ifsp.spo.java.cards.itens.Carta;
 
 import java.util.List;
 
-public class PontuadorBasico  implements Pontuador {
+public class PontuadorClassico implements Pontuador {
     public int verificarPontuacao(List<Carta> cartas){
 
         int pontuacao = 0;
