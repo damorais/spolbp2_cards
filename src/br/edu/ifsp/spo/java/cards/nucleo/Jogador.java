@@ -32,4 +32,7 @@ public class Jogador {
         return resultado;
     }
 
+    public List<Carta> getMao() {
+        return this.mao;
+    }
 }
