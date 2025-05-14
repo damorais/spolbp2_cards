@@ -32,7 +32,19 @@ public class Jogador {
         return resultado;
     }
 
+    public List<Carta> descartarMao(){
+        var cartasDescartadas = new ArrayList<>(this.mao);
+
+        this.mao.clear();
+
+        return cartasDescartadas;
+    }
+
     public List<Carta> getMao() {
         return this.mao;
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

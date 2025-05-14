@@ -11,7 +11,8 @@ public class App {
 //        Carta carta2 = new Carta(Naipe.COPAS, Valor.DEZ);
 
         Jogo vinteUm = new Jogo();
-        System.out.println(vinteUm);
+        vinteUm.play();
+//        System.out.println(vinteUm);
 
 //        Baralho baralho = new Baralho();
 //
