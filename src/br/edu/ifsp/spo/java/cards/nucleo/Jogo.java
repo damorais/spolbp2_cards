@@ -24,7 +24,8 @@ public class Jogo {
 
         this.baralho = new Baralho();
         this.jogador1 = new Jogador(ui.solicitarNomeJogador(1));
-        this.jogador2 = new Jogador(ui.solicitarNomeJogador(2));
+//        this.jogador2 = new Jogador(ui.solicitarNomeJogador(2));
+        this.jogador2 = new JogadorIA();
 
         for(int i = 0; i < 2; i++){
             this.jogador1.receberCarta(this.baralho.tirarCarta());
@@ -60,9 +61,15 @@ public class Jogo {
         do {
             var pontuacao = this.pontuador.verificarPontuacao(jogador.getMao());
 
-            ui.exibirMao(jogador.getMao(), pontuacao);
+            if(jogador instanceof JogadorIA){
+                var ia = (JogadorIA) jogador;
 
-            acao = ui.obterAcao();
+                acao = ia.decidir(pontuacao);
+            }else{
+                ui.exibirMao(jogador.getMao(), pontuacao);
+
+                acao = ui.obterAcao();
+            }
 
             if(acao == AcaoDoJogador.COMPRAR)
                 jogador.receberCarta(this.baralho.tirarCarta());
