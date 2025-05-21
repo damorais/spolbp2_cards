@@ -1,8 +1,10 @@
 package br.edu.ifsp.spo.java.cards.regras;
 
 import br.edu.ifsp.spo.java.cards.itens.Carta;
+import br.edu.ifsp.spo.java.cards.nucleo.Jogador;
 
 import java.util.List;
+import java.util.Map;
 
 public class PontuadorAsValeOnze implements Pontuador {
     public int verificarPontuacao(List<Carta> cartas){
@@ -25,5 +27,10 @@ public class PontuadorAsValeOnze implements Pontuador {
         }
 
         return pontuacao;
+    }
+
+    @Override
+    public Map<Jogador, Integer> calcularPontuacaoRodada(Jogador jogador1, Jogador jogador2) {
+        throw new UnsupportedOperationException("Método não implementado");
     }
 }
