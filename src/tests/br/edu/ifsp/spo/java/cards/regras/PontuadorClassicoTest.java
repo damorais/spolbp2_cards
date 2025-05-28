@@ -10,8 +10,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-abstract class FabricaDeExemplosDe
-
 class PontuadorClassicoTest {
     @Test
     void verificarPontuacaoQuandoListaDeCartasENula(){
