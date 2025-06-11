@@ -41,14 +41,54 @@ public class PontuadorClassico implements Pontuador {
         var pontuacaoRodadaJogador1 = 0;
         var pontuacaoRodadaJogador2 = 0;
 
-        if(pontuacaoMaoJogador1 == pontuacaoMaoJogador2){
+        var resultado = new HashMap<Jogador, Integer>();
+
+        if(pontuacaoMaoJogador1 < 21 && pontuacaoMaoJogador2 > 21){
+            pontuacaoRodadaJogador1 = pontuacaoMaoJogador1;
+            pontuacaoRodadaJogador2 = -5;
+        }
+
+        if(pontuacaoMaoJogador1 > 21 && pontuacaoMaoJogador2 < 21) {
+            pontuacaoRodadaJogador1 = -5;
+            pontuacaoRodadaJogador2 = pontuacaoMaoJogador2;
+        }
+
+        if(pontuacaoMaoJogador1 > 21 && pontuacaoMaoJogador2 > 21) {
+            pontuacaoRodadaJogador1 = 21 - pontuacaoMaoJogador1;
+            pontuacaoRodadaJogador2 = 21 - pontuacaoMaoJogador2;
+        }
+
+        if(pontuacaoMaoJogador1 == 21 && pontuacaoMaoJogador2 < 21){
+            pontuacaoRodadaJogador1 = 30;
+            pontuacaoRodadaJogador2 = 0;
+        }
+
+        if(pontuacaoMaoJogador1 < 21 && pontuacaoMaoJogador2 == 21){
+            pontuacaoRodadaJogador1 = 0;
+            pontuacaoRodadaJogador2 = 30;
+        }
+
+        if(pontuacaoMaoJogador1 < 21 && pontuacaoMaoJogador2 < 21 && (pontuacaoMaoJogador1 > pontuacaoMaoJogador2)){
+            pontuacaoRodadaJogador1 = pontuacaoMaoJogador1 - pontuacaoMaoJogador2;
+            pontuacaoRodadaJogador2 = 0;
+        }
+
+        if(pontuacaoMaoJogador1 < 21 && pontuacaoMaoJogador2 < 21 && (pontuacaoMaoJogador1 < pontuacaoMaoJogador2)){
+            pontuacaoRodadaJogador1 = 0;
+            pontuacaoRodadaJogador2 = pontuacaoMaoJogador2 - pontuacaoMaoJogador1;
+        }
+
+        if(pontuacaoMaoJogador1 == 21 && pontuacaoMaoJogador2 == 21){
+            pontuacaoRodadaJogador1 = 21;
+            pontuacaoRodadaJogador2 = 21;
+        } else if(pontuacaoMaoJogador1 == pontuacaoMaoJogador2){
             pontuacaoRodadaJogador1 = 10;
             pontuacaoRodadaJogador2 = 10;
         }
 
-        return new HashMap<>(Map.of(
-                jogador1, pontuacaoRodadaJogador1,
-                jogador2, pontuacaoRodadaJogador2
-        ));
+        resultado.put(jogador1, pontuacaoRodadaJogador1);
+        resultado.put(jogador2, pontuacaoRodadaJogador2);
+
+        return resultado;
     }
 }
