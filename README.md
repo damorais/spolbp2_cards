@@ -2,9 +2,5 @@
 
 Este projeto está sendo utilizado para exercitar conceitos básicos de aplicações JAVA.
 
-Até o momento as seguintes classes e enums estão presentes:
 
-- Card (Carta): Representa uma carta de baralho
-- Deck (Baralho): Representa um conjunto de cartas, ou seja, um baralho
-- Suit (Naipe): Enum com os naipes possíveis
-- Rank (Valor): Enum representando os valores possíveis de uma carta.  
+OBS: Para a correta exibição das cartas no console, não esquecer de adicionar a pasta "resources" no ambiente de desenvolvimento (No Intellij IDEA, clicar com o botão direito na pasta e selecionar a opção "mark as resources folder")

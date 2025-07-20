@@ -4,8 +4,28 @@ import br.edu.ifsp.spo.java.cards.itens.Baralho;
 import br.edu.ifsp.spo.java.cards.regras.Pontuador;
 import br.edu.ifsp.spo.java.cards.ui.JogoUI;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
+
+
+record EstadoDoJogo(
+        int pontuacaoJogador1,
+        int pontuacaoJogador2,
+        int rodadaAtual
+) {
+
+    public static EstadoDoJogo criarEstadoInicial(){
+        return new EstadoDoJogo(0, 0, 1);
+    }
+
+    public EstadoDoJogo atualizarEstadoERodada(int pontuacaoRodadaJogador1, int pontuacaoRodadaJogador2){
+        return new EstadoDoJogo(
+                this.pontuacaoJogador1() + pontuacaoRodadaJogador1,
+                this.pontuacaoJogador2() + pontuacaoRodadaJogador2,
+                this.rodadaAtual() + 1
+        );
+    }
+
+}
 
 public class Jogo {
 
@@ -18,43 +38,70 @@ public class Jogo {
     private JogoUI ui;
 
     public Jogo(){
-        this.ui = new JogoUI();
+        this.baralho = new Baralho();
+        this.ui = new JogoUI(this.baralho);
 
         this.pontuador = this.ui.escolherPontuador();
 
-        this.baralho = new Baralho();
         this.jogador1 = new Jogador(ui.solicitarNomeJogador(1));
-//        this.jogador2 = new Jogador(ui.solicitarNomeJogador(2));
         this.jogador2 = new JogadorIA();
-
-        for(int i = 0; i < 2; i++){
-            this.jogador1.receberCarta(this.baralho.tirarCarta());
-            this.jogador2.receberCarta(this.baralho.tirarCarta());
-        }
     }
 
     public void play(){
-        Optional<Jogador> vencedor = Optional.empty();
+        var estadoDoJogo = EstadoDoJogo.criarEstadoInicial();
+        var numeroMaximoDeRodadas = ui.solicitarNumeroRodadas();
 
-        while(vencedor.isEmpty()){
-            ui.exibirInicioJogo();
+        ui.exibirInicioJogo();
 
-            executarRodada(this.jogador1);
-            executarRodada(this.jogador2);
+        //Execução das rodadas da partida
+        while(estadoDoJogo.rodadaAtual() <= numeroMaximoDeRodadas){
+            //TODO: Exibir o inicio da rodada
+            ui.exibirInicioRodada(
+                    jogador1.getNome(),
+                    jogador2.getNome(),
+                    estadoDoJogo.pontuacaoJogador1(),
+                    estadoDoJogo.pontuacaoJogador2());
 
 
-            vencedor = this.verificarVencedor();
+            this.distribuirCartas();
 
-            if(vencedor.isPresent()){
-                ui.exibirVencedor(vencedor.get());
-            }else{
-                this.reiniciarRodada();
-            }
+            executarRodadaJogador(this.jogador1);
+            executarRodadaJogador(this.jogador2);
+
+            //Calcular a pontuacao da rodada e atualizar o estado do jogo
+            var pontuacoesRodada = this.pontuador.calcularPontuacaoRodada(this.jogador1, this.jogador2);
+
+            //Atualizar estado do jogo
+            estadoDoJogo = estadoDoJogo.atualizarEstadoERodada(
+                    pontuacoesRodada.get(this.jogador1),
+                    pontuacoesRodada.get(this.jogador2)
+            );
         }
+
+        this.resolverVencedorPartida(estadoDoJogo);
     }
 
-    private void executarRodada(Jogador jogador) {
-        ui.exibirInicioRodada(jogador.getNome());
+    private void resolverVencedorPartida(EstadoDoJogo estadoDoJogo) {
+        var diferencaPontuacao = estadoDoJogo.pontuacaoJogador1() - estadoDoJogo.pontuacaoJogador2();
+
+        if(diferencaPontuacao > 0){
+            ui.exibirVencedor(this.jogador1);
+        }else if(diferencaPontuacao < 0){
+            ui.exibirVencedor(this.jogador2);
+        }else{
+            //Exibir empate!
+            ui.exibirEmpate();
+        }
+
+        ui.exibirPontuacaoFinal(
+                jogador1.getNome(),
+                jogador2.getNome(),
+                estadoDoJogo.pontuacaoJogador1(),
+                estadoDoJogo.pontuacaoJogador2());
+    }
+
+    private void executarRodadaJogador(Jogador jogador) {
+        ui.exibirInicioRodadaJogador(jogador.getNome());
 
         AcaoDoJogador acao = AcaoDoJogador.PASSAR;
 
@@ -79,29 +126,7 @@ public class Jogo {
         ui.exibirFimRodada(jogador.getNome());
     }
 
-    private Optional<Jogador> verificarVencedor() {
-        var pontuacaoJogador1 = this.pontuador.verificarPontuacao(this.jogador1.getMao());
-        var pontuacaoJogador2 = this.pontuador.verificarPontuacao(this.jogador2.getMao());
-
-        var empate = (pontuacaoJogador1 > 21 && pontuacaoJogador2 > 21) || (pontuacaoJogador1 == pontuacaoJogador2);
-
-        Optional<Jogador> vencedor = Optional.empty();
-
-        if(!empate){
-            if(pontuacaoJogador1 > 21)
-                vencedor = Optional.of(this.jogador2);
-            else if(pontuacaoJogador2 > 21)
-                vencedor = Optional.of(this.jogador1);
-            else
-                vencedor = Optional.of(pontuacaoJogador1>pontuacaoJogador2? this.jogador1 : this.jogador2);
-        }else{
-            ui.exibirEmpate();
-        }
-
-        return vencedor;
-    }
-
-    private void reiniciarRodada() {
+    private void distribuirCartas() {
         this.baralho.adicionarDescartes(this.jogador1.descartarMao());
         this.baralho.adicionarDescartes(this.jogador2.descartarMao());
 

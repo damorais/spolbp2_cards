@@ -42,7 +42,7 @@ public class Baralho {
                 '}';
     }
 
-    public List<Carta> getCards() {
+    public List<Carta> getCartas() {
         return cartas;
     }
 }
